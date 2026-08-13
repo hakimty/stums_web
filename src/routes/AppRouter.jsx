@@ -1,5 +1,5 @@
 // src/routes/AppRouter.jsx
-import { Routes, Route } from 'react-router';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Mainlayout from '../layout/Mainlayout';
 import Dashboard from '../pages/Dashboard';
 import Courses from '../pages/Course';
@@ -11,23 +11,24 @@ import Authlayout from '../layout/Authlayout.jsx';
 
 const AppRouter = () => {
   return (
-    <div>
-      <Routes>
-        {/* PUBLIC ROUTES (No login required) */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <Routes>
+      {/* PUBLIC ROUTES */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-        {/* PROTECTED ROUTES (Wrapped inside Authlayout) */}
-        <Route element={<Authlayout />}>
-          <Route path="/" element={<Mainlayout />}>
-            <Route index element={<Home />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="courses" element={<Courses />} />
-            <Route path="attendance" element={<Attendance />} />
-          </Route>
+      {/* PROTECTED ROUTES */}
+      <Route element={<Authlayout />}>
+        <Route path="/" element={<Mainlayout />}>
+          <Route index element={<Home />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="courses" element={<Courses />} />
+          <Route path="attendance" element={<Attendance />} />
         </Route>
-      </Routes>
-    </div>
+      </Route>
+
+      {/* FALLBACK: Catch-all unknown routes */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 };
 
